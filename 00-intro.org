@@ -1,0 +1,174 @@
+#+DATE: [2020-01-07 Tue]
+#+TITLE: CHE 573 University of Alberta
+#+OX-IPYNB-KEYWORD-METADATA: keywords
+#+KEYWORDS: introduction
+
+# You need this to be first so it exports correctly
+#+BEGIN_SRC ipython
+
+#+END_SRC
+
+#+RESULTS:
+: # Out[140]:
+
+
+
+* Python
+
+We will use Python in  this class as the  Python is open source free programming language. It is preffered research tool, and it is one of the most popular programming languages around today.
+
+We assume most of you have not used Python before so we will start by small steps in introducing the Python and we will build up skills based on it. It is an opportunity to learn something new!
+
+For a lot of examples of using Python for scientific computing, see our colleague web  http://kitchingroup.cheme.cmu.edu/pycse/.
+
+* Jupyter notebook introduction
+
+*Jupyter notebooks* are an interactive, browser-based tool for running Python. Jupyter notebooks will be used exclusively in this class. We will quickly build up the skills required to solve systems engineering problems. We will not learn everything about programming, mathematical modeling or engineering processes. Our goal is to get you thinking in a very general way about systems, their modeling and how in computational way to address these problems, and to learn how to use computation as a way to augment your analytical skills.
+
+The notes in the form of notebook are available to you during the class and also for you to work along with us.
+
+#+BEGIN_SRC ipython 
+print('Hello World!')
+# Type C-Enter to run this cell
+# Type shift-Enter to run this cell and got to the next one or create a new one.
+#+END_SRC
+
+#+RESULTS:
+: # Out[37]:
+
+One way to use notebooks for comuptation is to consider a toy problem. What is the value of unknown variable $a$ that satisfies the equation $a + 7 = 10$?
+
+By linear algebra algebra, one can subtract 7 from each side of the equation, $a$ will be isolated, and equal to the value of the right hand side of the equation.
+
+<div class="alert alert-warning">
+You can double-click on any text block to see what the Markdown is that generates it. Type C-Enter to re-render the cell.
+</div>
+
+Here is the code that implements that explanation:
+
+#+BEGIN_SRC ipython
+a = 10 - 7
+a  # this makes the value of x get displayed
+#+END_SRC
+
+#+RESULTS:
+: # Out[39]:
+: : 3
+
+** numpy - Linbrary in python
+
+[[http://www.numpy.org][numpy]] is a Python library for arrays. Every time we want to deal with numerics and python we have to import this library to access the functionality in it. The conventional way to import this library is:
+
+<div class="alert alert-warning">
+Remember this cell. You will use it almost every time.
+</div>
+
+#+BEGIN_SRC ipython
+import numpy as np
+#+END_SRC
+
+#+RESULTS:
+: # Out[40]:
+
+To see help on the numpy library, run this cell:
+
+#+BEGIN_SRC ipython
+np
+#+END_SRC
+
+#+RESULTS:
+: # Out[41]:
+: : <module 'numpy' from '/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/numpy/__init__.pyc'>
+
+
+Now, we can access functions in the numpy module using "dot notation". For example, let us start by creating an array of linearly spaced points using the linspace function. First, we access the help to see how to use it. This "dot" notation uses the functionality of the np.classes and in particular allows for a lot of build functions.
+
+#+BEGIN_SRC ipython
+np.linspace
+#+END_SRC
+
+#+RESULTS:
+: # Out[5]:
+
+<div class="alert alert-warning">
+np.pi is a constant for the number $\pi$
+</div>
+
+
+#+BEGIN_SRC ipython
+x = np.linspace(0, 4 * np.pi)
+x
+#+END_SRC
+
+
+Most mathematical operations are element-wise on arrays.
+
+#+BEGIN_SRC ipython
+2 * x
+#+END_SRC
+
+The way to acces the vector is to apply th eindex of the element in the array. A key point to remember is that in python array/vector indices start at 0 and it is denoted with brackets, which is different from Matlab, which uses parentheses to index a array.
+
+How about matrix. In python, we use row, column notation. We use a : to indicate all rows or all columns.
+
+#+BEGIN_SRC ipython
+a = np.array([[1, 2, 3], 
+              [4, 5, 6], 
+              [7, 8, 9]]) 
+print (a[0,:]) # row one
+print (a[:,0]) # column one
+#+END_SRC
+
+#+RESULTS:
+: # Out[44]:
+
+We can define new variables
+#+BEGIN_SRC ipython
+y1 = np.sin(x)
+y2 = np.cos(x)
+#+END_SRC
+
+#+RESULTS:
+: # Out[35]:
+
+** plotting
+
+Plots are made by using [[https://matplotlib.org][matplotlib]]. First, we immort  matplotlib and the %matplotlib inline if we are using a Jupyter notebook. 
+
+<div class="alert alert-warning">
+Remember this cell. You will use it almost every time you make a plot.
+</div>
+
+#+BEGIN_SRC ipython
+%matplotlib inline
+import matplotlib.pyplot as plt
+#+END_SRC
+
+#+RESULTS:
+: # Out[46]:
+
+You call functions in the plt library to create plots. These are automatically saved in the notebook.
+
+#+BEGIN_SRC ipython
+plt.plot(x, y1, x, y2)
+plt.xlabel('x')
+plt.ylabel('y')
+plt.legend(['y1', 'y2'])
+# Always include axis labels and legends when appropriate
+#+END_SRC
+
+
+* Summary
+
+Today the basic ideas about using Jupyter notebooks to run Python computations are introduced. The main points are:
+
+1. Code is run in code cells
+2. You have to import some functions from libraries
+3. *numpy*, *scipy* and *matplotlib* are three of the main scientific programming libraries used in this class.
+4. We saw some ways to get help on functions
+
+Next time we will dig into defining functions more deeply, and how to print formatted strings containing results.
+
+* Followup actions
+
+By the next class, you should all have Anaconda Python 3.7 installed or visit the website https://ualberta.syzygy.ca/
