@@ -15,11 +15,29 @@
 * DIGITAL SIGNAL PROCESSING FOR CHEMICAL ENGINEERS
 
  - A /*signal*/ is any physical quantity that varies with time, space (location), or any other independent variables. This is a very broad definition. There are many natural signals. For example, Figure.ref:fig1 below shows a speech signal, which varies with time. An image is also a signal, which varies with space (location). In process engineering, measurements of various variables (e.g., temperatures, pressures), controller outputs are all signals that vary with time. In this course, we primarily focus on signals that vary with time - /time series signals/.
-  
+
  #+ATTR_LATEX: width=2in :caption {\caption{Speech signal.}}
+ #+ATTR_HTML: :caption {\caption{Speech signal}}
  #+CAPTION: Speach signal
  #+LABEL: fig1
  [[file:./FiguresCHE573/speechsignal.png]]
+
+
+ - It is important to note that process signals typically contain a few components as described by the following equation:
+
+ \[y(t) = x(t) + n(t) +\delta(t)\]
+
+ where $y(t)$ is the measured signal, $x(t)$ denotes the true value of the signal, $n(t)$ denotes the measurement noise and $\delta(t)$ is the bias. One objective in signal processing is to recover $x(t)$ from the noisy $y(t)$.
+
+** Continuous-time and discrete-time signals
+
+ - Continuous-time (CT) signals are also called analog signals. CT signals are defined for every value of time and take values in a continuous interval $(a,b)$ where $a$ could be $-\infty$ and $b$ could be $\infty$. CT signals are functions of the continuous-time $t$. Two examples of CT signals are as follows:
+
+ \[ \begin{array}{c}s_1(t)=5t,\\s_2(t)=20t^2\end{array}\]
+
+
+
+
 
 * Python
 
