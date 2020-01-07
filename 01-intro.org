@@ -1,0 +1,29 @@
+#+DATE: [2020-01-07 Tue] 
+#+TITLE: CHE 573 University of Alberta: DIGITAL SIGNAL PROCESSING FOR CHEMICAL ENGINEERS
+#+OX-IPYNB-KEYWORD-METADATA: keywords
+#+KEYWORDS: introduction
+
+# You need this to be first so it exports correctly
+#+BEGIN_SRC ipython
+
+#+END_SRC
+
+#+RESULTS:
+: # Out[0]:
+
+
+* DIGITAL SIGNAL PROCESSING FOR CHEMICAL ENGINEERS
+
+ - A /*signal*/ is any physical quantity that varies with time, space (location), or any other independent variables. This is a very broad definition. There are many natural signals. For example, Figure.ref:fig1 below shows a speech signal, which varies with time. An image is also a signal, which varies with space (location). In process engineering, measurements of various variables (e.g., temperatures, pressures), controller outputs are all signals that vary with time. In this course, we primarily focus on signals that vary with time - /time series signals/.
+  
+ #+ATTR_LATEX: width=2in :caption {\caption{Speech signal.}}
+ #+CAPTION: Speach signal
+ #+LABEL: fig1
+ [[file:./FiguresCHE573/speechsignal.png]]
+
+* Python
+
+* Summary
+
+* Followup actions
+

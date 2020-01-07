@@ -1,5 +1,5 @@
-#+DATE: [2020-01-07 Tue]
-#+TITLE: CHE 573 University of Alberta
+#+DATE: [2020-01-07 Tue] 
+#+TITLE: CHE 573 University of Alberta: DIGITAL SIGNAL PROCESSING FOR CHEMICAL ENGINEERS
 #+OX-IPYNB-KEYWORD-METADATA: keywords
 #+KEYWORDS: introduction
 
@@ -8,16 +8,11 @@
 
 #+END_SRC
 
-#+RESULTS:
-: # Out[140]:
-
-
-
 * Python
 
-We will use Python in  this class as the  Python is open source free programming language. It is preffered research tool, and it is one of the most popular programming languages around today.
+We will use Python exclusively in class and is better than anything else for what we will do in this class. It is preffered research tool, and it is one of the most popular programming languages around today.
 
-We assume most of you have not used Python before so we will start by small steps in introducing the Python and we will build up skills based on it. It is an opportunity to learn something new!
+We assume most of you have not used Python before so we will start by small steps in introducing the Python and we will build up skills based on it.
 
 For a lot of examples of using Python for scientific computing, see our colleague web  http://kitchingroup.cheme.cmu.edu/pycse/.
 
@@ -55,7 +50,7 @@ a  # this makes the value of x get displayed
 : # Out[39]:
 : : 3
 
-** numpy - Linbrary in python
+** COMMENT numpy - Linbrary in python
 
 [[http://www.numpy.org][numpy]] is a Python library for arrays. Every time we want to deal with numerics and python we have to import this library to access the functionality in it. The conventional way to import this library is:
 
@@ -100,12 +95,51 @@ x = np.linspace(0, 4 * np.pi)
 x
 #+END_SRC
 
+#+RESULTS:
+#+begin_example
+# Out[7]:
+,#+BEGIN_EXAMPLE
+  array([  0.        ,   0.25645654,   0.51291309,   0.76936963,
+  1.02582617,   1.28228272,   1.53873926,   1.7951958 ,
+  2.05165235,   2.30810889,   2.56456543,   2.82102197,
+  3.07747852,   3.33393506,   3.5903916 ,   3.84684815,
+  4.10330469,   4.35976123,   4.61621778,   4.87267432,
+  5.12913086,   5.38558741,   5.64204395,   5.89850049,
+  6.15495704,   6.41141358,   6.66787012,   6.92432667,
+  7.18078321,   7.43723975,   7.69369629,   7.95015284,
+  8.20660938,   8.46306592,   8.71952247,   8.97597901,
+  9.23243555,   9.4888921 ,   9.74534864,  10.00180518,
+  10.25826173,  10.51471827,  10.77117481,  11.02763136,
+  11.2840879 ,  11.54054444,  11.79700098,  12.05345753,
+  12.30991407,  12.56637061])
+,#+END_EXAMPLE
+#+end_example
 
 Most mathematical operations are element-wise on arrays.
 
 #+BEGIN_SRC ipython
 2 * x
 #+END_SRC
+
+#+RESULTS:
+#+begin_example
+# Out[8]:
+,#+BEGIN_EXAMPLE
+  array([  0.        ,   0.51291309,   1.02582617,   1.53873926,
+  2.05165235,   2.56456543,   3.07747852,   3.5903916 ,
+  4.10330469,   4.61621778,   5.12913086,   5.64204395,
+  6.15495704,   6.66787012,   7.18078321,   7.69369629,
+  8.20660938,   8.71952247,   9.23243555,   9.74534864,
+  10.25826173,  10.77117481,  11.2840879 ,  11.79700098,
+  12.30991407,  12.82282716,  13.33574024,  13.84865333,
+  14.36156642,  14.8744795 ,  15.38739259,  15.90030568,
+  16.41321876,  16.92613185,  17.43904493,  17.95195802,
+  18.46487111,  18.97778419,  19.49069728,  20.00361037,
+  20.51652345,  21.02943654,  21.54234962,  22.05526271,
+  22.5681758 ,  23.08108888,  23.59400197,  24.10691506,
+  24.61982814,  25.13274123])
+,#+END_EXAMPLE
+#+end_example
 
 The way to acces the vector is to apply th eindex of the element in the array. A key point to remember is that in python array/vector indices start at 0 and it is denoted with brackets, which is different from Matlab, which uses parentheses to index a array.
 
@@ -157,6 +191,57 @@ plt.legend(['y1', 'y2'])
 # Always include axis labels and legends when appropriate
 #+END_SRC
 
+#+RESULTS:
+: # Out[47]:
+: : <matplotlib.legend.Legend at 0x106f5f6d0>
+: [[file:./obipy-resources/Fgy5J0.png]]
+
+** scipy
+
+[[https://www.scipy.org][scipy]] contains numerous libraries for a broad range of scientific computing needs.
+
+Suppose we want to perform the [[https://docs.scipy.org/doc/scipy/reference/tutorial/integrate.html#general-integration-quad][following integral]]: $I = \int_0^{4.5} J_{2.5}(x) dx$. The function $J_{2.5}$ is a special function known as a Bessel function. scipy provides both the integration function, and an implementation of the special function we can use.
+
+#+BEGIN_SRC ipython
+from scipy.integrate import quad
+from scipy.special import jv
+#+END_SRC
+
+#+RESULTS:
+: # Out[8]:
+
+#+BEGIN_SRC ipython
+quad
+#+END_SRC
+
+#+RESULTS:
+: # Out[9]:
+: : <function scipy.integrate.quadpack.quad>
+
+#+BEGIN_SRC ipython
+jv
+#+END_SRC
+
+#+RESULTS:
+: # Out[10]:
+: : <ufunc 'jv'>
+
+To evaluate this integral, we have to define a function for the integrand, and use the quad function to compute the integral. The quad function returns two values, the value of the integral, and an estimate of the maximum error in the integral.
+
+#+BEGIN_SRC ipython
+# This is how we define a function. There is a function name, and arguments
+# The function returns the output of the jv function.
+def integrand(x):
+    return jv(2.5, x)
+
+I, err = quad(integrand, 0, 4.5)
+
+I, err
+#+END_SRC
+
+#+RESULTS:
+: # Out[15]:
+: : (1.1178179380783253, 7.866317216380692e-09)
 
 * Summary
 
@@ -171,4 +256,6 @@ Next time we will dig into defining functions more deeply, and how to print form
 
 * Followup actions
 
-By the next class, you should all have Anaconda Python 3.7 installed or visit the website https://ualberta.syzygy.ca/
+By the next class, you should all have Anaconda Python 3.7 installed.
+
+
