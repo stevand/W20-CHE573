@@ -213,7 +213,7 @@ org.figure(plt.savefig('./FiguresCHE573/figure3.png'),name='fig3',
 
  - The *energy* of a signal $x(n)$ is defined as:
 
- \[E\equiv \sum\limits_{n=-\infty}^{\infty} |x(n)|^2\]
+ \[E \equiv \sum\limits_{n=-\infty}^{\infty} |x(n)|^2\]
 
  which is the summation of the squares of the magnitude of a signal at different instants. If we define the expression
 
