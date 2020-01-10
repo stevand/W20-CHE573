@@ -9,7 +9,7 @@
 #+END_SRC
 
 #+RESULTS:
-: # Out[0]:
+: # Out[10]:
 
 
 * DIGITAL SIGNAL PROCESSING FOR CHEMICAL ENGINEERS
@@ -80,7 +80,7 @@ org.figure(plt.savefig('./FiguresCHE573/figure1.png'),name='fig1',
 
 #+RESULTS: fig1
 : # Out[1]:
-: [[file:./obipy-resources/W0WiH0.png]]
+: [[file:./obipy-resources/VuEwYl.png]]
 
 
 
@@ -147,7 +147,7 @@ org.figure(plt.savefig('./FiguresCHE573/figure2.png'),name='fig2',
 
 #+RESULTS: fig2
 : # Out[3]:
-: [[file:./obipy-resources/Q0XXtv.png]]
+: [[file:./obipy-resources/Lz73Ud.png]]
 
  - The above classification can be summarized as follows:
 
@@ -201,7 +201,7 @@ org.figure(plt.savefig('./FiguresCHE573/figure3.png'),name='fig3',
 
 #+RESULTS: fig3
 : # Out[4]:
-: [[file:./obipy-resources/o9Kl6x.png]]
+: [[file:./obipy-resources/weJinc.png]]
 
  - In this course, we will focus on /stationary/ random signals. In mathematics, a stationary signal is a signal whose joint probability distribution does not change when shifted in time. In a less strict sense, we can treat signals whose characteristics (e.g., /mean, variance/) do not change over time as stationary.
 
@@ -250,6 +250,35 @@ org.figure(plt.savefig('./FiguresCHE573/figure3.png'),name='fig3',
 
  \[\int_{t=0^-}^{t=0^+} \delta(t) dt = 1\]
 
+
+#+name: fig4
+#+BEGIN_SRC ipython
+import matplotlib.pyplot as plt
+import numpy as np
+import math
+
+
+n=np.linspace(-4,4,9)
+x=np.zeros(len(n))
+
+for i in range (0,len(n)-1):
+      if  n[i]== 0:
+        x[i]=1
+      else:
+        x[i]=0
+
+plt.xlabel('n')
+plt.ylabel('x[n]')
+plt.xticks(np.arange(-4, 4, step=1))
+plt.plot(n,x,'bo')
+
+#+END_SRC
+
+#+RESULTS: fig4
+: # Out[5]:
+: : [<matplotlib.lines.Line2D at 0x108076dd0>]
+: [[file:./obipy-resources/OYyBR6.png]]
+
 ** The unit step signal
 
  - The /unit step signal/ has a value one when $n$ is equal to or greater than zero and has zero value at all the other instants. In this course, we will use $u(n)$ to denote the unit step signal. It is defined mathematically as follows:
@@ -260,11 +289,67 @@ org.figure(plt.savefig('./FiguresCHE573/figure3.png'),name='fig3',
 
  \[u(t)=\left\{\begin{array}{cc}1, & if\; t\geq0 \\ 0, & if\; t<0\end{array}\right.\]
 
+#+name: fig5
+#+BEGIN_SRC ipython
+import matplotlib.pyplot as plt
+import numpy as np
+import math
+
+
+n=np.linspace(-4,4,9)
+x=np.zeros(len(n))
+
+for i in range (0,len(n)):
+      if  n[i]>= 0:
+        x[i]=1
+      else:
+        x[i]=0
+
+plt.xlabel('n')
+plt.ylabel('x[n]')
+plt.xticks(n)
+plt.plot(n,x,'bo')
+
+#+END_SRC
+
+#+RESULTS: fig5
+: # Out[6]:
+: : [<matplotlib.lines.Line2D at 0x108411bd0>]
+: [[file:./obipy-resources/AggiEb.png]]
+
 ** The unit ramp signal
 
  - The /unit ramp signal/ is defined mathematically as follows:
 
  \[u_r(n)=\left\{\begin{array}{cc}n, & if\; n\geq0 \\ 0, & if\; n<0\end{array}\right.\]
+
+#+name: fig6
+#+BEGIN_SRC ipython
+import matplotlib.pyplot as plt
+import numpy as np
+import math
+
+
+n=np.linspace(-4,4,9)
+x=np.zeros(len(n))
+
+for i in range (0,len(n)):
+      if  n[i]>= 0:
+        x[i]=n[i]
+      else:
+        x[i]=0
+
+plt.xlabel('n')
+plt.ylabel('x[n]')
+plt.xticks(n)
+plt.plot(n,x,'bo')
+#+END_SRC
+
+#+RESULTS: fig6
+: # Out[7]:
+: : [<matplotlib.lines.Line2D at 0x1086e7950>]
+: [[file:./obipy-resources/1uaNex.png]]
+
 
 ** The exponential signal
 
@@ -287,7 +372,7 @@ org.figure(plt.savefig('./FiguresCHE573/figure3.png'),name='fig3',
 
 
  #+ATTR_ORG: :width 300
- #+LABEL: fig4
+ #+LABEL: fig7
  #+CAPTION: Backshift operator and forward shift.
  #+begin_src ditaa :file ./FiguresCHE573/ditaa-backshift.png
 
@@ -305,6 +390,44 @@ org.figure(plt.savefig('./FiguresCHE573/figure3.png'),name='fig3',
 
       
 #+end_src
+
+#+RESULTS: fig7
+[[file:./FiguresCHE573/ditaa-backshift.png]]
+
+#+name: fig8
+#+BEGIN_SRC ipython
+import matplotlib.pyplot as plt
+import numpy as np
+import math
+
+
+n=np.arange(0,10,1)
+x=np.zeros(len(n))
+xm3=np.ones(len(n))*np.nan
+xp2=np.ones(len(n))*np.nan
+
+for i in range (0,len(n)):
+    if n[i]<=5:
+        x[i]=n[i]-1
+    else:
+        x[i]=4
+        
+for i in range (0,len(n)):
+    if i>=3:
+        xm3[i]=x[i-3]
+    if i<=len(n)-1-2:
+        xp2[i]=x[i+2]
+plt.xlabel('n')
+plt.ylabel('x[n]')
+plt.xticks(n)
+plt.plot(n,x,'bo',n,xp2,'go',n,xm3,'ro')
+plt.legend(['x[n]','x[n+2]','x[n-3]'],loc='lower right')
+#+END_SRC
+
+#+RESULTS: fig8
+: # Out[8]:
+: : <matplotlib.legend.Legend at 0x108923d50>
+: [[file:./obipy-resources/s8efao.png]]
 
 ** Properties of unit sample and step signals
 
