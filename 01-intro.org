@@ -58,7 +58,7 @@ import math
 n=np.linspace(-4,16,20)
 x=np.zeros(len(n))
 
-for i in range (0,len(n)-1):
+for i in range (0,len(n)):
       if i >= 0:
         x[i]=math.pow(0.8,i)
       else:
@@ -104,7 +104,7 @@ org.figure(plt.savefig('./FiguresCHE573/figure1.png'),name='fig1',
 
     \[ x_c(t) = \left\{\begin{array}{cc}0.8^{2t}, & if\; t\geq 0 \\ 0, & otherwise\end{array}\right.\]
 
-    For this example, the sampling time is $T=0.5$ second. According to  ref:eq1, $t=nT=0.5n$. This implies that $x(n)=x_c(t)|_{t=nT=0.5n}$. For example, $x(0)=x_c(0)=1$, $x(1)=x_c(0.5)=0.8$.
+    For this example, the sampling time is $T=0.5$ second. According to ref:eq1, $t=nT=0.5n$. This implies that $x(n)=x_c(t)|_{t=nT=0.5n}$. For example, $x(0)=x_c(0)=1$, $x(1)=x_c(0.5)=0.8$.
 
  - Discrete-time signals can be further divided into two classes of signals:
    - *Continuous-valued discrete-time signals*. The signals can take on all possible values in a finite or infinite range.
@@ -125,7 +125,7 @@ import math
 n=np.linspace(-4,16,20)
 x=np.zeros(len(n))
 
-for i in range (0,len(n)-1):
+for i in range (0,len(n)):
       if i >= 0:
         x[i]=round(math.pow(0.8,i),1)
       else:
