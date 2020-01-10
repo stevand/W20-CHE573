@@ -1,0 +1,100 @@
+#+DATE: [2020-01-07 Tue] 
+#+TITLE: CHE 573 University of Alberta: DIGITAL SIGNAL PROCESSING FOR CHEMICAL ENGINEERS
+#+OX-IPYNB-KEYWORD-METADATA: keywords
+#+KEYWORDS: Frequency concept, periodic signals
+
+# You need this to be first so it exports correctly
+#+BEGIN_SRC ipython
+
+#+END_SRC
+
+#+RESULTS:
+: # Out[0]:
+
+* Concept of Frequency in CT and DT Sinusoidal Signals
+
+ - In this section, we will discuss the concept of frequency in continuous-time (CT) and discrete-time (DT) signals. Specifically, we will focus on CT sinusoidal and DT sinusoidal signals. The reason is that we could use a sum of several sinusoids of different amplitudes and frequencies to approximate many signals:
+
+ \[x(t) \approx \sum\limits_{i=1}^NA_i\cos(2\pi F_i t + \theta_i).\]
+
+ This implies that sinusoidal signals are the basics of general signals.
+
+** Representation of CT sinusoids
+
+ - A continuous-time sinusoid is mathematically described as follows:
+
+ \[x_c(t) = A \cos(\Omega t + \theta),\; -\infty<t<\infty.\]
+
+ - The subscript $c$ used with $x$ denotes a continuous-time signal. This signal is completely characterized by three parameters: $A$ is the \amplitude\ of the sinusoid; $\Omega$ is the \frequency\ in radian per second; $\theta$ is the {\em phase} in radians. An example is shown in Figure.
+
+#+name: fig1
+#+BEGIN_SRC ipython
+import pycse.orgmode as org
+%matplotlib inline
+import matplotlib.pyplot as plt
+import numpy as np
+import math
+
+
+t=np.linspace(-2*math.pi,2*math.pi,100)
+x=np.sin(t)
+
+plt.xlabel('t')
+plt.ylabel('$x_c(t)$')
+plt.plot(t,x,t,np.zeros(len(t)),'-')
+
+
+#+END_SRC
+
+#+RESULTS: fig1
+
+ - Instead of $\Omega$, we quite often use the frequency $F$ in cycles per second or hertz (Hz). The relationship between $\Omega$ and $F$ is as follows:
+
+ \[\Omega = 2\pi F.\]
+
+ - In terms of $F$, (\ref{eqn:l3_sin}) can be written as:
+
+ \[x_c(t) = A \cos(2\pi F t + \theta),\; -\infty<t<\infty.\]
+
+ Both above forms will be used.
+
+
+
+
+ #+ATTR_LATEX: width=2in :caption {\caption{Speech signal.}}
+ #+ATTR_HTML: :caption {\caption{Speech signal}}
+ #+CAPTION: Speach signal
+ #+LABEL: fig0
+ [[file:./FiguresCHE573/speechsignal.png]]
+
+
+ #+ATTR_ORG: :width 300
+ #+LABEL: fig4
+ #+CAPTION: Backshift operator and forward shift.
+ #+begin_src ditaa :file ./FiguresCHE573/ditaa-backshift.png
+
+                     /---------\
+             x(k)    |   cBLU  |  x(k+1)
+             ------->|   q     +----------->
+                     |         |
+                     \---------/
+
+                     /---------\
+             x(k+1)  |   cBLU  |  x(k)
+             ------->|   1/q   +----------->
+                     |         |
+                     \---------/
+
+      
+#+end_src
+
+
+
+* Summary
+
+ - We introduce signals 
+
+* Followup actions
+
+ - Run the python code and change parameters in the sampling of continuous to digital signal
+

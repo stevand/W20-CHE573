@@ -79,8 +79,8 @@ org.figure(plt.savefig('./FiguresCHE573/figure1.png'),name='fig1',
 #+END_SRC
 
 #+RESULTS: fig1
-: # Out[7]:
-: [[file:./obipy-resources/EhccUK.png]]
+: # Out[1]:
+: [[file:./obipy-resources/W0WiH0.png]]
 
 
 
@@ -146,8 +146,8 @@ org.figure(plt.savefig('./FiguresCHE573/figure2.png'),name='fig2',
 #+END_SRC
 
 #+RESULTS: fig2
-: # Out[5]:
-: [[file:./obipy-resources/1jvPo2.png]]
+: # Out[3]:
+: [[file:./obipy-resources/Q0XXtv.png]]
 
  - The above classification can be summarized as follows:
 
@@ -200,8 +200,8 @@ org.figure(plt.savefig('./FiguresCHE573/figure3.png'),name='fig3',
 #+END_SRC
 
 #+RESULTS: fig3
-: # Out[15]:
-: [[file:./obipy-resources/FbFfTe.png]]
+: # Out[4]:
+: [[file:./obipy-resources/o9Kl6x.png]]
 
  - In this course, we will focus on /stationary/ random signals. In mathematics, a stationary signal is a signal whose joint probability distribution does not change when shifted in time. In a less strict sense, we can treat signals whose characteristics (e.g., /mean, variance/) do not change over time as stationary.
 
