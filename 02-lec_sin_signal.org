@@ -25,11 +25,10 @@
 
  \[x_c(t) = A \cos(\Omega t + \theta),\; -\infty<t<\infty.\]
 
- - The subscript $c$ used with $x$ denotes a continuous-time signal. This signal is completely characterized by three parameters: $A$ is the \amplitude\ of the sinusoid; $\Omega$ is the \frequency\ in radian per second; $\theta$ is the {\em phase} in radians. An example is shown in Figure.
+ - The subscript $c$ used with $x$ denotes a continuous-time signal. This signal is completely characterized by three parameters: $A$ is the *amplitude* of the sinusoid; $\Omega$ is the *frequency* in /radian per second/; $\theta$ is the *phase* in /radians/. An example is shown in the Figure below.
 
 #+name: fig1
 #+BEGIN_SRC ipython
-import pycse.orgmode as org
 %matplotlib inline
 import matplotlib.pyplot as plt
 import numpy as np
@@ -48,7 +47,7 @@ plt.plot(t,x,t,np.zeros(len(t)),'-')
 
 #+RESULTS: fig1
 
- - Instead of $\Omega$, we quite often use the frequency $F$ in cycles per second or hertz (Hz). The relationship between $\Omega$ and $F$ is as follows:
+ - Instead of $\Omega$, we quite often use the *frequency* $F$ in /cycles per second/ or /hertz/ (Hz). The relationship between $\Omega$ and $F$ is as follows:
 
  \[\Omega = 2\pi F\label{eq1}\tag{1}\]
 
@@ -60,7 +59,7 @@ plt.plot(t,x,t,np.zeros(len(t)),'-')
 
 ** Properties of CT sinusoids
 
- - An analog sinusoidal signal is characterized by the following properties:
+An analog sinusoidal signal is characterized by the following properties:
 
    + *Periodicity*. For every fixed value of frequency $F$, $x_c$ is periodic. There exists $T_p$ such that
 
@@ -68,9 +67,9 @@ plt.plot(t,x,t,np.zeros(len(t)),'-')
 
      for all $-\infty<t<\infty$. It is easy to show that $T_p=\pm\dfrac{k}{F}$ with $k$ a positive integer satisfies the above condition:
 
-     \[\begin{array}{rcl}x_c(t+T_p) & = & A\cos(2\pi F (t+T_p)+\theta)=A\cos(2\pi F (t\pm\dfrac{k}{F})+\theta)\\& = & A\cos(2\pi F t+\theta\pm2\pi k) = A\cos(2\pi Ft+\theta)\\& = & x_c(t) \end{array}\]
+     \[\begin{array}{rcl}x_c(t+T_p) & = & A\cos[2\pi F (t+T_p)+\theta]=A\cos[2\pi F (t\pm\dfrac{k}{F})+\theta]\\& = & A\cos(2\pi F t+\theta\pm2\pi k) = A\cos(2\pi Ft+\theta)\\& = & x_c(t) \end{array}\]
 
-     Indeed, $T_p=\dfrac{1}{F}$ is defined as the  /fundamental period/ of the sinusoidal signal.
+     Indeed, $T_p=\dfrac{1}{F}$ is defined as the *fundamental period* of the sinusoidal signal.
 
      Example: Consider the following signal:
 
@@ -81,12 +80,15 @@ plt.plot(t,x,t,np.zeros(len(t)),'-')
 
     It can be seen that $F=40$ which implies that the fundamental period is $T_p=1/40=0.025$.
 
+
    + CT sinusoids with different frequencies are themselves different. For example, if we have two signals:
 
      \[\begin{array}{rcl}x_{c1}(t) & = & A\cos(2\pi F_1t+\theta)\\    x_{c2}(t) & = & A\cos(2\pi F_2t+\theta)\end{array}\]
 
-     where $F_1\neq F_2$, then the two signals are different.
-   + Increasing $|F|$ results in an increase in the rate of oscillation.
+     where $F_1\neq F_2$, then the two signals are different.\\
+
+   + Increasing $|F|$ results in an increase in the rate of oscillation.\\
+
    + The range of the frequency of CT sinusoids is:
 
      \[-\infty < F <\infty\]
@@ -99,9 +101,9 @@ plt.plot(t,x,t,np.zeros(len(t)),'-')
 
  \[x(n) = A\cos(\omega n + \theta), \; -\infty<n<\infty\]
 
- where $n$ is an integer variable denoting the sampling number. $A$ is the amplitude of the sinusoid, $\omega$ is the /frequency/ in /radians per sample/, and $\theta$ is the /phase/ in radians.
+ where $n$ is an integer variable denoting the sampling number. $A$ is the *amplitude* of the sinusoid, $\omega$ is the *frequency* in /radians per sample/, and $\theta$ is the *phase* in /radians/.
 
- - Like in the continuous case, instead of $\omega$, we often use the frequency $f$ in cycles per sample. The relationship between $\omega$ and $f$ is as follows:
+ - Like in the continuous case, instead of $\omega$, we often use the frequency $f$ in /cycles per sample/. The relationship between $\omega$ and $f$ is as follows:
 
  \[\omega=2\pi f\]
 
@@ -109,7 +111,7 @@ plt.plot(t,x,t,np.zeros(len(t)),'-')
 
  \[x(n) = A\cos(2\pi f n + \theta), \; -\infty<n<\infty\]
 
- Figure below shows a sinusoid with  frequency $w=\pi/6$ radians per sample ($f=1/12$ cycles per sample) and phase $\theta=\pi/3$.
+ Figure below shows a sinusoid with frequency $w=\pi/6$ radians per sample ($f=1/12$ cycles per sample) and phase $\theta=\pi/3$.
 
  #+ATTR_LATEX: width=2in :caption {\caption{Sinusoid signal.}}
  #+ATTR_HTML: :caption {\caption{Sinusoid signal}}
@@ -118,7 +120,6 @@ plt.plot(t,x,t,np.zeros(len(t)),'-')
 
 #+name: fig2
 #+BEGIN_SRC ipython
-import pycse.orgmode as org
 %matplotlib inline
 import matplotlib.pyplot as plt
 import numpy as np
@@ -139,26 +140,21 @@ plt.plot(t,x,'bo',t,np.zeros(len(t)),'-')
 #+END_SRC
 
 #+RESULTS: fig2
-: # Out[5]:
-: #+BEGIN_EXAMPLE
-:   [<matplotlib.lines.Line2D at 0x108b1e690>,
-:   <matplotlib.lines.Line2D at 0x108b1e750>]
-: #+END_EXAMPLE
-: [[file:./obipy-resources/3lrWUA.png]]
+
 
 
 ** Properties of DT sinusoids
 
- - In contrast to CT sinusoids, the DT sinusoids have the following properties:
+In contrast to CT sinusoids, the DT sinusoids have the following properties:
 
-   + /A discrete-time sinusoid is periodic only if its frequency $f$ is a rational number./ This property is quite different from CT sinusoids. This can be seen as follows:
+   + *A discrete-time sinusoid is periodic only if its frequency $f$ is a rational number.* This property is quite different from CT sinusoids. This can be seen as follows:
      By definition, a DT sinusoid is periodic if and only if there exists an integer $N>0$ such that
 
-    \[x(n+N)=x(n) \quad \;for all\; n\]
+    \[x(n+N)=x(n) \quad \;\text{for all}\; n\]
 
     Let us calculate $x(n+N)$ and $x(n)$ separately and see what we get.
     
-    \[\begin{array}{rcl} x(n+N)&=&A\cos(2\pi f(n+N) +\theta)\\&=&A\cos(2\pi fn + \theta + 2\pi fN)\\    x(n) &=& A\cos(2\pi fn +\theta)    \end{array}\]
+    \[\begin{array}{rcl} x(n+N)&=&A\cos[2\pi f(n+N) +\theta]\\&=&A\cos(2\pi fn + \theta + 2\pi fN)\\    x(n) &=& A\cos(2\pi fn +\theta)    \end{array}\]
 
     In order to have $x(n)=x(n+N)$, there must exist an integer $k$ such that:
 
@@ -168,7 +164,8 @@ plt.plot(t,x,'bo',t,np.zeros(len(t)),'-')
 
     \[  f = \dfrac{k}{N}\]
 
-    According to above equation, a discrete-time sinusoidal signal is periodic only if its frequency $f$ can be expressed as the ratio of two integers. This is, $f$ is rational. The smallest $N$ such that above expression holds is called the /fundamental period/.
+    According to above equation, a discrete-time sinusoidal signal is periodic only if its frequency $f$ can be expressed as the ratio of two integers. This is, $f$ is rational. The smallest $N$ such that above expression holds is called the *fundamental period*.
+
     *Remark*
 
     From the above discussion, it can be concluded that not all DT sinusoids are periodic. To determine the fundamental period $N$ of a DT periodic sinusoid, we can express its frequency $f$ and cancel the common factors so that $k$ and $N$ are relatively prime. Then, the fundamental period of the sinusoid is equal to $N$.
@@ -177,7 +174,7 @@ plt.plot(t,x,'bo',t,np.zeros(len(t)),'-')
     Consider two DT sinusoids with frequencies $f_1=30/60$ and $f_2=31/60$, respectively. It can be found that the fundamental periods of the two signals are $N_1=2$ and $N_2=60$. From this example, it can be seen that a small change in frequency can result in a large change in the period.
 
 
-   + /Discrete-time sinusoids whose frequencies are separated by an integer multiple of $2\pi$ are identical./
+   + *Discrete-time sinusoids whose frequencies are separated by an integer multiple of $2\pi$ are identical.*
 
      To prove this statement, let us consider the following sinusoids:
 
@@ -185,7 +182,7 @@ plt.plot(t,x,'bo',t,np.zeros(len(t)),'-')
 
      where $-\pi\leq w_1\leq \pi$ and $w_2=w_1 + 2\pi k$ with $k$ an integer. It can be seen that:
 
-     \[\begin{array}{rcl}x_2(n) & = & A\cos(w_2n +\theta) = A\cos((w_1+2\pi k)n + \theta)\\&=& A\cos(w_1n + \theta + 2\pi kn) = A\cos(w_1n + \theta)\\&=& x_1(n) \end{array}\]
+     \[\begin{array}{rcl}x_2(n) & = & A\cos(w_2n +\theta) = A\cos[(w_1+2\pi k)n + \theta]\\&=& A\cos(w_1n + \theta + 2\pi kn) = A\cos(w_1n + \theta)\\&=& x_1(n) \end{array}\]
 
      *Remark*
 
@@ -193,11 +190,11 @@ plt.plot(t,x,'bo',t,np.zeros(len(t)),'-')
 
      In terms of $f$, the above property can be stated as follows: {\em discrete-time sinusoids whose frequencies are separated by an integer (such that $f_2=f_1+k$) are identical.}
 
-   +  /Any signal resulting from a DT sinusoidal signal with $|w|>\pi$ or $|f|>\dfrac{1}{2}$ is identical to a signal obtained with $|w|<\pi$ or $|f|<\dfrac{1}{2}$./
+   +  *Any signal resulting from a DT sinusoidal signal with $|w|>\pi$ or $|f|>\dfrac{1}{2}$ is identical to a signal obtained with $|w|<\pi$ or $|f|<\dfrac{1}{2}$.*
 
      This property is a result of the previous property. This property is based on the observation that any  frequency $w$ (or frequency $f$) can be represented as the sum of an  frequency $w_0$ (or a frequency $f_0$) between $-\pi$ (or -1/2) and $\pi$ (or 1/2) and an integer multiple of $2\pi$ (or an integer). That is,
 
-        \[        w = w_0 + 2\pi k \quad \;or\; \quad f=f_0+k \]
+        \[ w = w_0 + 2\pi k \quad \;or\; \quad f=f_0+k \]
 
         where $-\pi\leq w_0\leq \pi$ and $-1/2\leq f_0\leq 1/2$.
 
@@ -206,26 +203,25 @@ plt.plot(t,x,'bo',t,np.zeros(len(t)),'-')
 
         \[\begin{array}{c}w = \dfrac{4\pi}{3} = -\dfrac{2\pi}{3}+2\pi,\;w=\dfrac{8\pi}{3} = \dfrac{2\pi}{3}+2\pi\\ f = 1.1 = 0.1 + 1,\; f = 9.6 = -0.4 + 10 \end{array}\]
 
-        Because of this similarity, we call DT sinusoid having the  frequency $|w|>\pi$ (or $|f|>1/2$) an /alias/ of the corresponding signal with $|w|<\pi$ (or $|f|<1/2$).
+        Because of this similarity, we call DT sinusoid having the  frequency $|w|>\pi$ (or $|f|>1/2$) an *alias* of the corresponding signal with $|w|<\pi$ (or $|f|<1/2$).
 	
         *Example*
 
         $x_1(n)$ is an alias of $x_2(n)$
 
-        \[\begin{array}{rcl}x_1(n) & = & A\cos(\dfrac{7}{6}\pi n +\theta)=A\cos((-\dfrac{5}{6}\pi + 2\pi)n + \theta)\\ x_2(n) & = & A\cos(-\dfrac{5}{6}\pi n + \theta)\end{array}\]
+        \[\begin{array}{rcl}x_1(n) & = & A\cos\left(\dfrac{7}{6}\pi n +\theta\right)=A\cos\left[\left(-\dfrac{5}{6}\pi + 2\pi\right)n + \theta\right]\\ x_2(n) & = & A\cos\left(-\dfrac{5}{6}\pi n + \theta\right)\end{array}\]
 
         Thus, we regard frequencies in the range $-\pi\leq w\leq \pi$ or $-\dfrac{1}{2}\leq f\leq \dfrac{1}{2}$ as unique and all frequencies $|w|> \pi$ or $|f|> \dfrac{1}{2}$ as aliases. Further, we define:
 
         \[-\pi\leq w\leq \pi \quad \;or\;\quad -\dfrac{1}{2}\leq f\leq \dfrac{1}{2}\]
 
-        as the /fundamental frequency range/ of discrete-time sinusoids.
+        as the *fundamental frequency range* of discrete-time sinusoids.
 
-   + /The highest rate of oscillation in a DT sinusoid is attained when $w=\pm\pi$ or $f=\pm\dfrac{1}{2}$./
+   + *The highest rate of oscillation in a DT sinusoid is attained when $w=\pm\pi$ or $f=\pm\dfrac{1}{2}$.*
      This property is a straightforward result of the previous property. When $f$ increase from 0 to 1/2, oscillation rate increases; when $f$ decreases from 0 to -1/2, oscillation rate increases.
 
 #+name: fig3
 #+BEGIN_SRC ipython
-import pycse.orgmode as org
 %matplotlib inline
 import matplotlib.pyplot as plt
 import numpy as np
@@ -246,12 +242,7 @@ plt.plot(t,x,'bo-',t,np.zeros(len(t)),'-')
 #+END_SRC
 
 #+RESULTS: fig3
-: # Out[12]:
-: #+BEGIN_EXAMPLE
-:   [<matplotlib.lines.Line2D at 0x1093349d0>,
-:   <matplotlib.lines.Line2D at 0x109334a90>]
-: #+END_EXAMPLE
-: [[file:./obipy-resources/W6Gqbb.png]]
+
 
 | *Continuous-time Sinusoids*                                        | *Discrete-time Sinusoids*                                                       |
 |--------------------------------------------------------------------+---------------------------------------------------------------------------------|
@@ -267,6 +258,7 @@ plt.plot(t,x,'bo-',t,np.zeros(len(t)),'-')
 * Summary
 
  - We introduce signals continuous and discrete sinusoidal signals
+
  - Properties of discrete and continuous signals are explored
 
 * Followup actions
