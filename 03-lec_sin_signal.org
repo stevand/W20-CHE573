@@ -1,0 +1,161 @@
+#+DATE: [2020-01-07 Tue] 
+#+TITLE: CHE 573 University of Alberta: DIGITAL SIGNAL PROCESSING FOR CHEMICAL ENGINEERS
+#+OX-IPYNB-KEYWORD-METADATA: keywords
+#+KEYWORDS: Frequency concept, periodic signals
+
+# You need this to be first so it exports correctly
+#+BEGIN_SRC ipython
+
+#+END_SRC
+
+#+RESULTS:
+: # Out[0]:
+
+* Sampling, Aliasing and Sampling Theorem
+
+ - In the real world, a physical signal (for example, temperature, pressure, flow rate signals) is analog by nature and can be described as a continuous-time function. In order to process analog signals using computers and DSP algorithms, analog signals are converted to digital signals via analog-to-digital (A/D) conversion. The A/D process in general includes /sampling/, /quantization/ and /coding/. Coding means to code a signal in the language of a computer. We discussed sampling and quantization very briefly in previous section. In this section, we will discuss more on sampling.
+
+** Sampling
+
+ - *Sampling* is the process of converting a continuous-time (analog) signal into a discrete-time signal by taking `samples' at discrete-time instants. The process of sampling can be illustrated using the following figure:
+
+#+ATTR_LATEX: width=2in :caption {\caption{Sampling.}}
+#+CAPTION: Sampling 
+#+LABEL: fig0
+[[file:./figuresCHE573/l4_sampler2.png]]
+
+ - In this figure, the continuous-time signal $x_c(t)$ is sampled every time $T$. Please pay attention to the relationship between $t$ and $n$. The process of sampling can be represented using block diagram as follows:
+
+
+#+ATTR_LATEX: width=2in :caption {\caption{Sampler.}}
+#+CAPTION: Sampler
+#+LABEL: fig1
+[[file:./figuresCHE573/l4_sampler.png]]
+
+ - The relationship between the resulting discrete-time signal $x(n)$ and $x_c(t)$ is that:
+
+   \[x(n) = x_c(t)|_{t=nT}=x_c(nT)\]
+
+   where $n$ is the sample number, $T$ is the sampling interval (or sampling time or sampling period). Note that one assumption used here is that the continuous-time signal is sampled using periodic sampling. We define:
+
+   \[F_s = \dfrac{1}{T}\]
+
+   as the /sampling frequency/ (or /sampling rate/). The relationship between $t$, $n$, $T$ and $F_s$ is as follows:
+   
+   \[t=nT=\dfrac{n}{F_s}\]
+
+   *Example:*
+   - Given $x_c(t)=2^t$, if it is sampled at a rate $F_s=2$ samples/second. What is the corresponding sampled discrete-time signal?
+
+   First, we can calculate the sampling period $T=1/F_s=0.5$~second. Then, we can list all the values like below:
+
+   \[\begin{array}{lll}n \quad\quad & t\quad\quad  & x(n)\\0 & 0 & 2^0 = 1\\1 & 0.5 & 2^{0.5}=1.412\\2 & 1 & 2^1=2\\3 & 1.5 & 2^{1.5}=2.8284\\4 & 2 & 2^2=4\end{array}\]
+
+   Or we can write:
+   \[x(n) = x_c(t)|_{t=nT}=x_c(0.5n)=2^{0.5n}\]
+
+** Aliasing
+
+ - Let us start this section with an example. Consider two CT signals:
+
+   \[\begin{array}{rcl} x_{c1} & = & \cos(2\pi F_1t), \quad \textmd{with~} F_1=\dfrac{1}{8}~Hz\\ x_{c2} & = & \cos(2\pi F_2t), \quad \textmd{with~} F_2=-\dfrac{7}{8}~Hz\\\end{array}\]
+
+
+   When they are sampled at a frequency $F_s=1$ (i.e., $T=1$), what are the resulting DT signals?
+
+   Let us use the relationship $x(n)=x_c(nT)$ to write down the corresponding DT signals. For $x_{c1}$, the corresponding DT signal is as follows:
+
+   \[x_1(n) = x_{c1}(nT)=\cos(2\pi F_1 nT)\]
+
+   Noticing that $T=1$ and $F_1=1/8$, it can be obtained that:
+
+   \[x_1(n) = \cos(2\pi \dfrac{1}{8}n)\]
+
+
+   Using the same approach, it can be obtained that the corresponding DT signal of $x_{2c}$ is:
+
+   \[x_2(n) = \cos(-2\pi \dfrac{7}{8}n)\]
+
+   The frequency of this DT sinusoid is $f_2=-7/8$ which is out of the range $[-1/2,1/2]$. The above signal is an alias of the following signal:
+
+   \[x_2(n) = \cos(-2\pi \dfrac{7}{8}n)=\cos(-2\pi\dfrac{7}{8}n + 2\pi n)=\cos(2\pi \dfrac{1}{8}n)\]
+
+
+   This implies that the sampled signals from $x_{c1}$ and $x_{c2}$ are the same. The following figure illustrates this example.
+
+#+ATTR_LATEX: width=2in :caption {\caption{Sampled signals.}}
+#+CAPTION: Sampled signals
+#+LABEL: fig3
+[[file:./figuresCHE573/l4_sampledsignals.png]]
+
+
+ - In previous sections, we defined alias in terms of the frequency of DT sinusoids. We extend the definition to include continuous-time signals here.
+
+ - Consider two CT sinusoidal signals with different frequencies $F_1$ and $F_2$ such that $|F_1|<|F_2|$. If they are sampled at the same rate $F_s$ and the obtained DT signals are identical, we say that $F_2$ is an /alias/ of frequency $F_1$ at the sampling rate of $F_s$. This phenomena is called / aliasing/.
+
+ - In above Example, frequency $F_2=-\dfrac{7}{8}$ is an alias of $F_1=\dfrac{1}{8}$ at the sampling rate $F_s=1$. It can be further verified that frequencies $F_k=F_1+kF_s$ with $k$ an integer are aliases of $F_1$ at the sampling rate $F_s$.
+
+ - A natural follow-up question is that: what is the reason for aliasing?
+
+ - Let us consider a CT sinusoidal signal:
+
+   \[x_c(t) = A\cos(2\pi F_0 t+\theta)\]
+
+
+   with a sampling rate $F_s$. The resulting DT signal is:
+
+   \[x(n) = A\cos(2\pi F_0 \dfrac{n}{F_s}+\theta)=A\cos(2\pi \dfrac{F_0}{F_s}n+\theta)\]
+
+   The frequency of the DT signal is:
+
+   \[f_0=\dfrac{F_0}{F_s}\]
+
+   From the previous section, we know that the fundamental frequency range of a DT sinusoid is $[-1/2,1/2]$. Based on this, we have the following cases:
+
+   +  If the frequency of the DT signal $f_0$ satisfies:
+
+   \[|f_0|\leq \dfrac{1}{2}\]
+
+
+   or, equivalently:
+
+   \[ \left|\dfrac{F_0}{F_s}\right|\leq \dfrac{1}{2} \quad \textmd{or} \quad -\dfrac{1}{2}F_s\leq F_0\leq \dfrac{1}{2}F_s,\]
+
+   the DT signal $x(n)$ is uniquely represented. There will be {\em no aliasing}. $\dfrac{1}{2}F_s$ is the highest frequency that can be represented uniquely with a sampling rate $F_s$ which is called the {\em folding frequency} at the sampling rate $F_s$.
+   + If $|f_0|>\dfrac{1}{2}$ (or $|F_s|<2|F_0|$), then the resulting DT signal with a sampling rate $F_s$ will not be appropriate to represent the CT signal and /aliasing occurs/.
+
+     *Example:* In above Example, $F_s=1$, it can be seen that $F_s>2F_1$ so $F_s=1$ is appropriate for $x_{c1}$ and the resulting DT signal $x_1(n)$ is appropriate to represent $x_{c1}$. However, it can be seen that $F_s<2F_2$. Thus, $F_s=1$ is not appropriate for $x_{c2}$ and aliasing occurs. If we sample the two signals at $F_s'=2$, aliasing will be avoided.
+
+** Sampling theorem
+
+ - The above discussion leads the sampling theorem. Let us suppose that any analog signal can be represented (or approximately sufficiently accurate) as a sum of sinusoids of different amplitudes, frequencies and phases such that:
+
+ \[ x_c(t) = \sum_{i=1}^NA_i\cos(2\pi F_it+\theta_i)\]
+
+ *Remark:* All signals satisfy such a representation over any short time segment.
+
+ From the earlier discussion, we have the following *Shannon's Sampling Theorem*:
+
+ */Shannon's Sampling Theorem:/* If the highest frequency contained in an analog signal $x_c(t)$ is $F_{\max}$ and the signal is sampled at a rate $F_s>2F_{\max}$, then $x_c(t)$ can be exactly recovered from its samples $x(n)$.}
+
+ Sampling theorem tells us the minimum sampling rate needed for a signal. The minimum sampling rate $2F_{\max}$ is also called the /Nyquist frequency/.
+
+ Audio CDs use a sampling rate of 44.1 kHz for storage. This frequency is slightly more than $2\times 20$ kHz and $20$ kHz is in general the accepted upper limit of human hearing of musical sound.
+
+** Digital Signal Processing
+
+ - Digital signal processing is the process of processing digital signals to extract information for various applications. Most of the signals in science and engineering are analog. Digital computers and associated digital devices can only deal with digital signals. An analog signal is typically first converted to a digital signal via an analog-to-digital (A/D) converter (in general including sampling, quantization and coding). The resulting digital signal is then processed in a digital signal processor (system/filter). The processed signal is then converted to an analog signal via a digital-to-analog (D/A) converter.
+
+ - The above process can be described by the following block diagram:
+
+
+* Summary
+
+ - We introduce signals continuous and discrete sinusoidal signals
+
+ - Properties of discrete and continuous signals are explored
+
+* Followup actions
+
+ - Run the python code and change parameters in the signal generation to obtain periodic and non periodic signals
+
