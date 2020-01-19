@@ -209,7 +209,7 @@
 
  - The output of the controller $u$ is in general first converted to continuous-time signal via a zero-order holder (ZOH) and then sent to the actuator to implement. On the other hand, the measurements of the sensor is in generally converted to digital signals via an A/D converter. Because of measurement noise, there is normally a prefilter to avoid aliasing of high-frequency noise and another filter to reduce the noise in the measurement signal. The filtered signal is then compared with the set-point and used in the controller.
 
-* Offline signal preprocessing}
+* Offline signal preprocessing
 
  - Process signals (for example, sensor measurements) are in general very noisy. These signals should not be used directly for data analysis.  These signals need to be preprocessed. There are many data preprocessing techniques including outlier detection, missing data replacement, data cleaning, data reduction etc. In this course, we will briefly discuss outlier detection and handling.
 

@@ -1,0 +1,280 @@
+#+DATE: [2020-01-07 Tue] 
+#+TITLE: CHE 573 University of Alberta: DIGITAL SIGNAL PROCESSING FOR CHEMICAL ENGINEERS
+#+OX-IPYNB-KEYWORD-METADATA: keywords
+#+KEYWORDS: System, Discretization, z-transform
+
+# You need this to be first so it exports correctly
+#+BEGIN_SRC ipython
+
+#+END_SRC
+
+#+RESULTS:
+: # Out[0]:
+
+* Systems
+
+ - A *system* is defined as a device or a process that can manipulate, change or transmit signals. In other words, a system operates on signals to produce new signals. In this course, our focus is on discrete-time systems. The following representations of a system will be frequently used:
+
+ - Mathematical representation:
+
+   \[y(n) = T\{x(n)\}\label{eq1}\tag{1}\]
+
+ where $x$ is the input signal to the system, $y$ is the output signal of the system and $T$ denotes the system. Equation ref:eq1 is a very abstract representation of a system. In this course, the following /difference equation/ representation based on inputs and outputs of DT systems will be very often used:
+
+   \[y(n) = -\sum\limits_{k=1}^{N}a_ky(n-k)+\sum\limits_{k=0}^M b_k x(n-k)\label{eq2}\tag{2}\]
+
+   where the first term on the right characterizes the effect of the previous outputs of the system and the second term on the right characterizes the effect of the current and the previous inputs. The first term on the right is also called the /zero input contribution to the output/ and the second term on the right is called the /zero state contribution to the output/.
+
+ - The following is an example of system described by its inputs and output:
+
+   \[y(n) = x(n) + 2x(n-1)\]
+
+#+ATTR_ORG: :width 300
+#+LABEL: fig0
+#+CAPTION: Block diagram.
+#+begin_src ditaa :file ./figuresCHE573/ditaa-diagram-system.png
+
+                      
+    x(n)   +----------+  y(n)
+           |          |
+      --+->* system   *---->
+           |          |
+           +----------/    
+                        
+      
+#+end_src
+
+#+RESULTS: fig0
+[[file:./figuresCHE573/ditaa-diagram-system.png]]
+
+ - *Filters*: A /filter/ is an unit that attenuates some frequency components of the input signal to produce a desired output. A filter could be an algorithm or a hardware device. Theoretically, there is no distinction between a system and a filter in their operation on the input signals. /A filter is a system and a system is a filter./
+
+ - The processes (like reactors, separators, heat exchangers) we deal with in process control are continuous-time systems. When we use digital computers to implement a control system, we would like to have a discrete-time model of the process.
+
+ - We know that in order to describe the dynamics of a continuous-time system, /ordinary differential equations/ (ODEs) are used. Discrete-time systems, as mentioned earlier, are described by difference equations. In this section, we discuss two approaches to convert continuous-time systems described by ODEs to discrete-time systems described by difference equations. We illustrate the two approaches using an example.
+
+ - Consider a tank with an input stream at mass flow rate $\dot m$ and temperature $T_i$ and an output stream at mass flow rate $\dot m$ and temperature $T$. The tank is well mixed and the temperature inside the tank is the same as $T$. The tank is shown in the following graph.
+
+ #+ATTR_ORG: :width 300
+ #+LABEL: fig1
+ #+CAPTION: Tank with delay schematics.
+ #+begin_src ditaa :file ./figuresCHE573/ditaa-tank-system.png
+
+
+                   mi(t) *-------+
+                                 |
+                                 V
+                               +-*-------+
+                               :  {s}    |
+                               +---------+			       
+                               | {s}     |
+                               |         |
+                               |         |   
+                               +---------+---> m(t)
+      
+#+end_src
+
+#+RESULTS: fig1
+[[file:./figuresCHE573/ditaa-tank-system.png]]
+
+ - The dynamics of $T$ in the tank can be described by the following ordinary differential equation:
+
+   \[\rho V \dfrac{dT}{dt} = \dot m T_i - \dot m T \label{eq3}\tag{3}\]
+
+ where $\rho$ is the density of the liquid and $V$ is the volume of the liquid in the tank. Suppose that the temperature is sampled with a sampling time $T_s$ and we want to describe the dynamics of the temperature using a discrete-time system.
+
+
+    + *Approach 1:* The first approach we are going to discuss is called finite difference approximation. In this approach, the key step is to approximate the time derivative $\dfrac{dT}{dt}$ using finite difference method:
+
+    \[\left.\dfrac{dT}{dt}\right|_{t=(n-1)T_s}\approx \dfrac{\left.T(t)\right|_{t=nT_s}-\left.T(t)\right|_{t=(n-1)T_s}}{T_s} =  \dfrac{T_d(n)-T_d(n-1)}{T_s}\]
+
+
+    where $T_d$ is the sampled temperature $T$. This approach uses the change rate of $T$ between the two sampling instants $n-1$ and $n$ to approximate the slope at the sampling instant $n-1$. It is /forward finite difference/. This approximation is illustrated in the following plot.
+
+    #+ATTR_LATEX: width=2in :caption {\caption{Sampling.}}
+    #+CAPTION: Sampling 
+    #+LABEL: fig2
+    [[file:./figuresCHE573/ch2_dt.png]]
+
+    Substituting expressions and evaluating the right-hand-side of above equation at the /same/ time instant $(n-1)T_s$, we have the following discrete-time description:
+
+    \[\rho V\dfrac{T_d(n)-T_d(n-1)}{T_s}=\dot m T_{i,d}(n-1) - \dot m T_d(n-1)\]
+
+    which leads to
+    
+    \[T_d(n)= (1 - \dfrac{\dot m T_s}{\rho V}) T_d(n-1) + \dfrac{\dot m T_s}{\rho V} T_{i,d}(n-1)\]
+
+
+    which is the corresponding approximated first-order difference equation of ref:eq3 .
+
+    + *Approach 2:* The difference equation is an approximation of the original continuous-time equation. We could use it to predict future values of $T_d$. However, the predicted value will be different from the actual value. The second approach we are going to discuss is called exact discretization. In this approach, we re-write equation in continuous-time state space form:
+
+      \[\begin{array}{rcl}\dot y(t) & = & ay(t) + bx(t)\end{array}\]
+
+    where $y=T$, $a=-\dfrac{\dot m}{\rho V}$, $b=\dfrac{\dot m}{\rho V}$, and $x=T_i$. Consider the system is sampled with a sampling time $T_s$ and the input is piecewise constant, i.e., $u(t)=u((n-1)T_s)$ for $(n-1)T_s\leq t\leq nT_s$. Integrating from $t=(n-1)T$ to $t=nT$, we have:
+    
+    \[\begin{array}{rcl}y(nT_s) & = & e^{aT_s}y((n-1)T_s)+[\displaystyle\int_{(n-1)T_s}^{nT_s}e^{a(nT_s-\tau)}bx((n-1)T_s)d\tau]\\ &=& e^{aT_s}y((n-1)T_s)+[\displaystyle\int_{(n-1)T_s}^{nT_s}e^{a(nT_s-\tau)}bd\tau]x((n-1)T_s)\\ & = & e^{aT_s}y((n-1)T_s)+[-\dfrac{b}{a}e^{a(nT_s-\tau)}|_{\tau=(n-1)T_s}^{\tau=nT_s}]x((n-1)T_s)\\ & = & e^{aT_s}y((n-1)T_s)+[-\dfrac{b}{a}(1-e^{aT_s})]x((n-1)T_s)\end{array}\]
+
+    Let $T_d(n)=y(nT_s)$, $T_d(n-1)=y((n-1)T_s)$. We have
+
+    \[T_d(n) = e^{-\frac{\dot mT_s}{\rho V}}T_d(n-1)+(1-e^{-\frac{\dot mT_s}{\rho V}})T_i(n-1)\]
+
+    By comparing above expressions, we see that the two approaches give different Discrete time systems. We can set values for $\dot m$, $T_s$, $V$, $\rho$ to compare the coefficients of the two DT systems. When $T_s$ is small, the difference between them should be small; and when $T_s$ increases, the difference between them should increase. Note that even though the exact discretization gives accurate conversion, its implementation is more complicated and in practice, the finite approximation approach is used more often. 
+
+    *Remark:* Note that for the following continuous-time linear control system:
+
+    \[ \begin{array}{rcl} \dot y(t) & = & ay(t) + bx(t)\\ y(t_0) & = & y_0 \end{array}\]
+
+    its solution is:
+
+    \[y(t) = e^{a(t-t_0)}y_0 + \displaystyle\int_{t_0}^{t}e^{a(t-\tau)}bx(\tau)d\tau.\]
+
+** Classification of DT Systems
+
+***   Causal and non-causal systems
+
+ - A discrete-time system is said to be /causal/ if for any $n$, its output $y(n)$ only depends on its current and previous inputs $x(k)$ with $k\leq n$. If a discrete-time system does not satisfy the aforementioned condition, it is a /non-causal/ system.
+
+ - The following system is a causal system:
+
+   \[y(n) = x(n-1) + x(n)\]
+
+ - The following systems are not causal:
+
+   \[\begin{array}{c}y(n) = x(n) + 0.7x(n+1)\end{array}\]
+
+   How about the system $y(n) = x(n) + 0.7x(n-1) + y(n+1)$?
+
+   Note that all real physical systems are causal systems. In real-time process control, the control algorithms need to be causal. However, for off-line applications (for example, off-line data analysis), algorithms could be non-causal.
+
+
+*** Linear and nonlinear systems
+
+ - A /relaxed/ (i.e., causal and zero initial output $y(0)=0$) DT system $T$ is said to be /linear/ if it satisfies the superposition principle. That is, given two inputs $x_1(n)$ and $x_2(n)$ as well as their corresponding outputs
+
+ \[ y_1=T\{x_1(n)\},\quad y_2=T\{x_2(n)\}\]
+
+ then a linear system must satisfy
+
+ \[\alpha y_1(n)+\beta y_2(n) = T\{\alpha x_1(n) + \beta x_2(n)\}\]
+
+ for any scalar values $\alpha$ and $\beta$. The following diagram illustrates the superposition principle:
+
+#+ATTR_ORG: :width 300
+#+LABEL: fig3
+#+CAPTION: Block diagram.
+#+begin_src ditaa :file ./figuresCHE573/ditaa-diagram-superposition.png
+
+                      
+    x1(n)  +----------+  y1(n)
+           |          |
+      --+->* system   *---->                          +---------------+
+           |          |                               |               |
+           +----------/                ax1(n)+bx2(n)  | system        |   a y1(n)+b y2(n)
+                                    ----------------->*               *-------------------->
+                                                      |               |
+    x2(n)  +----------+  y2(n)                        +---------------+
+           |          |
+      --+->* system   *---->
+           |          |
+           +----------/    
+          
+
+              
+      
+#+end_src
+
+#+RESULTS: fig3
+[[file:./figuresCHE573/ditaa-diagram-superposition.png]]
+
+ - If a relaxed DT system does not satisfy the superposition principle, then it is said to be /nonlinear/.
+
+   *Example:*
+    - Is $y(n)=nx(n)$ a linear or nonlinear system?
+
+    In order to determine the linearity of the system, we follow the approach sketched in the diagram. Let us consider two input signals $x_1(n)$ and $x_2(n)$. Their corresponding outputs are:
+
+    \[y_1(n) = nx_1(n),\quad y_2(n)=nx_2(n)\]
+
+    Let us now create a new input signal $x_3(n)$ which is a linear combination of $x_1(n)$ and $x_2(n)$ such that:
+
+    \[x_3(n) = \alpha x_1(n) +\beta x_2(n) \]
+
+    and then determine the output of the system with input $x_3(n)$. The output is:
+
+    \[\begin{array}{rcl}y_3(n) & = & nx_3(n) = n(\alpha x_1(n) + \beta x_2(n))\\& = & \alpha nx_1(n) + \beta n x_2(n)\\ &=& \alpha y_1(n) + \beta y_2(n)\end{array}\]
+
+    This shows that the output is the same linear combination of the two outputs. Thus, this system is a linear system.
+
+    *Example:* How about the system $y(n)=x(n)^2$?
+
+** Stable and unstable systems
+
+ - A (linear or nonlinear) system is defined as Bounded Input Bounded Output (BIBO) /stable/, if and only if any bounded input produces bounded output. If a bounded input produces unbounded output, the system is called /unstable/.
+
+   + Determine if the following system is BIBO stable.
+
+   \[y(n) = 1.1y(n-1) + x(n)\]
+
+   First, we need to design a bounded input. In this example, let us pick the input $x(n)$ to be a unit sample signal:
+
+   \[x(n) = \delta(n)\]
+
+   Next, let us try to calculate the output of the system. Also, let us focus on $n\geq 0$. Let us consider that $y(n)=0$ for $n<0$:
+
+   \[\begin{array}{rllllll}y(0) & = & 1.1y(-1) + \delta(0) &=& 0 + 1 & = & 1\\y(1) & = & 1.1y(0) + \delta(1) &=& 1.1 + 0 & = & 1.1\\y(2) & = & 1.1y(1) + \delta(2) & = & 1.1 \cdot 1.1 +0 & = & 1.1^2\\ y(3) & = & 1.1y(2) + \delta(3) & = & 1.1^2\cdot 1.1 +0 & = & 1.1^3\\& \vdots & & & & &\\ y(n) & = & 1.1^n & & & & \end{array} \]
+
+   From this result, we could see that:
+
+   \[\lim\limits_{n\rightarrow \infty} y(n) = \lim\limits_{n\rightarrow \infty} 1.1^n = \infty\]
+
+   The output is not bounded. Thus, the system is not BIBO stable.
+
+   *Example:* Determine if the following system is BIBO stable.
+
+   \[y(n) = 0.9y(n-1) + x(n)\]
+
+
+** Time-invariant and time-variant systems
+
+ - A system is /time-invariant/ if its output does not depend explicitly on time. If the output of a system depends on time explicitly, then the system is  /time-variant/. The following diagram illustrates the concept of time-invariant.
+
+ #+ATTR_ORG: :width 300
+ #+LABEL: fig4
+ #+CAPTION: system invariance.
+ #+begin_src ditaa :file ./figuresCHE573/ditaa-system-inv.png
+
+
+                   
+                  
+                               +---------+			       
+                    x1(n)      | System  |      y1(n)                
+                 ------------->*         *----------->
+                    x1(n-k)    |         |      y1(n-k)  
+                               +---------+
+      
+#+end_src
+
+#+RESULTS: fig4
+[[file:./figuresCHE573/ditaa-system-inv.png]]
+
+ - The coefficients of time-invariant systems are constants and not functions of time. The following system is linear but not time-invariant:
+
+ \[y(n) = nx(n)\]
+
+ *Remark:* To better understand the concept of ``time-invariant", we can consider the experimental processes used in CHE~446 or any other courses. These experimental processes can be considered time-invariant. Different groups may perform the experiments at different days; however, if the same procedure is followed, (more or less) the same result should be obtained. Note that we may not see exactly the same result due to for example process noise.
+
+ In this course, we will focus on linear time-invariant causal DT systems.
+
+
+
+* Summary
+
+ - We introduce systems discretization 
+
+ - We provide two ways how one can discretize a system
+
+
+
+
+
